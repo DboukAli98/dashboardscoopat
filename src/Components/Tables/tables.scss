@@ -1,0 +1,17 @@
+.table{
+    height: auto;
+
+    .loader{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .loading{
+            font-size: 12px;
+            font-weight: bold;
+            color: #888;
+        }
+        
+    }
+}
