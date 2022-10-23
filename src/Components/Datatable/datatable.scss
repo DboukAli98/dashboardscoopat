@@ -1,6 +1,12 @@
 .datatable {
     height: 600px;
     padding: 20px;
+
+    .listTitle {
+      font-weight: 500;
+      color: gray;
+      margin-bottom: 15px;
+    }
     
     .datatableTitle{
       width: 100%;
@@ -72,6 +78,21 @@
         border-radius: 5px;
         color: crimson;
         border: 1px dotted rgba(220, 20, 60, 0.6);
+        cursor: pointer;
+      }
+    }
+    .outAction{
+      display: flex;
+      gap: 18px;
+      justify-content: flex-end;
+      
+
+      .viewButton {
+        padding: 2px 6px;
+        border-radius: 5px;
+        color: white;
+        background-color: darkblue;
+        border: 1px solid rgba(0, 0, 139, 0.596);
         cursor: pointer;
       }
     }

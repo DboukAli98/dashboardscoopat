@@ -5,7 +5,7 @@ import { Audio } from "react-loader-spinner";
 import axios from "axios";
 
 const columns = [
-  { field: "farmerCode", headerName: "Code", width: 130 },
+  { field: "farmerCode", headerName: "Code", width: 150 },
   { field: "firstName", headerName: "First name", width: 150 },
   { field: "lastName", headerName: "Last name", width: 130 },
   { field: "region", headerName: "Section", width: 130 },

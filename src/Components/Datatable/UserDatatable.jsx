@@ -69,6 +69,7 @@ const UserDatatable = () => {
     getUsers();
     // eslint-disable-next-line
   }, []);
+
   return (
     <div className="datatable">
       {loaded === false && (
@@ -88,6 +89,12 @@ const UserDatatable = () => {
 
       {users && (
         <div style={{ height: 400, width: "100%" }}>
+          <div className="outAction">
+            <Link to="/users/new" style={{ textDecoration: "none" }}>
+              <div className="viewButton">Add New User</div>
+            </Link>
+          </div>
+          <div className="listTitle">Users</div>
           <DataGrid
             getRowId={(row) => row.id}
             rows={users}

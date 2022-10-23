@@ -1,10 +1,28 @@
 import "./new.scss";
-import React from "react";
+import React, { useState } from "react";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import Navbar from "../../Components/Navbar/Navbar";
 import Select from "react-select";
+import { Audio } from "react-loader-spinner";
+import axios from "axios";
 
 const New = () => {
+  const regionOptions = [
+    { value: "SEGUIE", label: "SEGUIE" },
+    { value: "KOUADJAKRO", label: "KOUADJAKRO" },
+    { value: "OFFOUMPO", label: "OFFOUMPO" },
+    { value: "BOKAO", label: "BOKAO" },
+    { value: "SICOGI", label: "SICOGI" },
+    { value: "OFFA", label: "OFFA" },
+    { value: "ABOUDE MANDEKE", label: "ABOUDE MANDEKE" },
+    { value: "KOTCHIMPO", label: "KOTCHIMPO" },
+    { value: "ABOUDE NOUVEAU QUARTIER", label: "ABOUDE NOUVEAU QUARTIER" },
+    { value: "ABOUDE KOUASSIKRO", label: "ABOUDE KOUASSIKRO" },
+
+
+
+
+  ];
   const genderOptions = [
     { value: "male", label: "Male" },
     { value: "female", label: "Female" },
@@ -15,9 +33,72 @@ const New = () => {
     { value: true, label: "Yes" },
     { value: false, label: "No" },
   ];
+  const [loaded, setLoaded] = useState(true);
+  const [fname, setFname] = useState();
+  const [lname, setLname] = useState();
+  const [idType, setIdType] = useState();
+  const [idNum, setIdNum] = useState();
+  const [bPlace, setBPlace] = useState();
+  const [bDate, setBDate] = useState();
+  const [gender, setGender] = useState();
+  const [phone, setPhone] = useState();
+  const [location, setLocation] = useState();
+  const [section, setSection] = useState();
+  const [region, setRegion] = useState();
+  const [department, setDepartment] = useState();
+  const [owner, setOwner] = useState();
+
+  const reqData = {
+    firstName: fname,
+    lastName: lname,
+    idType: idType,
+    idNumber: idNum,
+    birthPlace: bPlace,
+    birthDate: bDate,
+    sex: gender,
+    contact: phone,
+    location: location,
+    section: section,
+    region: region,
+    department: department,
+    isFarmOwner: owner,
+  };
+
+  const AddFarmer = async (e) => {
+    e.preventDefault();
+    setLoaded(false);
+    const request = await axios("https://localhost:7066/api/Farmer/AddFarmer", {
+      method: "POST",
+      data: reqData,
+      "content-Type":"application/json"
+    });
+
+    if (request.status === 200) {
+      setLoaded(true);
+      console.log("success");
+    } else {
+      setLoaded(true);
+      console.log("Error" + request.statusText);
+    }
+  };
 
   return (
     <div className="new">
+       {loaded === false ? (
+        <div className="loader">
+          <Audio
+            className="loader"
+            height="30"
+            width="30"
+            radius="9"
+            color="#26547c"
+            ariaLabel="loading"
+            wrapperStyle
+            wrapperClass
+          />
+          <p className="loading">Loading</p>
+        </div>
+      ):null}
       <Sidebar />
       <div className="newContainer">
         <Navbar />
@@ -31,63 +112,59 @@ const New = () => {
           <div className="right">
             <form>
               <div className="formInput">
-                <label>Code</label>
-                <input type="text" required placeholder="code" />
-              </div>
-              <div className="formInput">
                 <label>Firstname</label>
-                <input type="text" required placeholder="John" />
+                <input type="text" required placeholder="John" onChange={(e) => setFname(e.target.value)} />
               </div>
               <div className="formInput">
                 <label>Lastname</label>
-                <input type="text" required placeholder="Doe" />
+                <input type="text" required placeholder="Doe" onChange={(e) => setLname(e.target.value)} />
               </div>
               <div className="formInput">
                 <label>Id Type</label>
-                <input type="text" required placeholder="Id Type" />
+                <input type="text" required placeholder="Id Type"  onChange={(e) => setIdType(e.target.value)}/>
               </div>
               <div className="formInput">
                 <label>Id Number</label>
-                <input type="text" required placeholder="Id number" />
+                <input type="text" required placeholder="Id number" onChange={(e) => setIdNum(e.target.value)} />
               </div>
               <div className="formInput">
                 <label>BirthPlace</label>
-                <input type="text" required placeholder="Agboville" />
+                <input type="text" required placeholder="Agboville" onChange={(e) => setBPlace(e.target.value)} />
               </div>
               <div className="formInput">
                 <label>BirthDate</label>
-                <input type="date" required />
+                <input type="date" required onChange={(e) => setBDate(e.target.value)} />
               </div>
               <div className="formInput">
                 <label>Gender</label>
-                <Select options={genderOptions} />
+                <Select options={genderOptions} onChange={(value) => setGender(value.value)}  />
               </div>
               <div className="formInput">
                 <label>Contact Phone</label>
-                <input type="phone" required placeholder="+972..." />
+                <input type="phone" required placeholder="+972..." onChange={(e) => setPhone(e.target.value)} />
               </div>
               <div className="formInput">
                 <label>Location</label>
-                <input type="text" required placeholder="Location" />
+                <input type="text" required placeholder="Location" onChange={(e) => setLocation(e.target.value)} />
               </div>
               <div className="formInput">
                 <label>Section</label>
-                <input type="text" required placeholder="Section" />
+                <input type="text" required placeholder="Section" onChange={(e) => setSection(e.target.value)} />
               </div>
               <div className="formInput">
                 <label>Region</label>
-                <input type="text" required placeholder="Region" />
+                <Select options={regionOptions} onChange={(value) => setRegion(value.value)} />
               </div>
               <div className="formInput">
                 <label>Department</label>
-                <input type="text" required placeholder="Department" />
+                <input type="text" required placeholder="Department" onChange={(e) => setDepartment(e.target.value)} />
               </div>
               <div className="formInput">
                 <label>Farm Owner ?</label>
-                <Select options={IsOwnerOptions} />
+                <Select options={IsOwnerOptions} onChange={(value) => setOwner(value.value)} />
               </div>
               <div className="formInput">
-                <button type="submit">Add Farmer</button>
+                <button onClick={AddFarmer}>Add Farmer</button>
               </div>
             </form>
           </div>

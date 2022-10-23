@@ -87,6 +87,12 @@ const FarmDatatable = () => {
 
       {farms && (
         <div style={{ height: 400, width: "100%" }}>
+          <div className="outAction">
+            <Link to="/users/new" style={{ textDecoration: "none" }}>
+              <div className="viewButton">Add New Farm</div>
+            </Link>
+          </div>
+          <div className="listTitle">Farms</div>
           <DataGrid
             getRowId={(row) => row.farmId}
             rows={farms}
