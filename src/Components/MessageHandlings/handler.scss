@@ -1,0 +1,30 @@
+.successContainer {
+  display: flex;
+  background-color: green;
+  color: white;
+  border-radius: 20px;
+  width: 200px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  .labelSuccess {
+    color: white;
+  }
+}
+
+.errorContainer {
+  background-color: red;
+  color: white;
+  border-radius: 20px;
+  width: 200px;
+  display: flex;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  .labelError {
+    color: white;
+  }
+}

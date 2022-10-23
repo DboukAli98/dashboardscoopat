@@ -47,10 +47,11 @@ const Tables = () => {
       setLoaded(true);
       setError(false);
       console.log(farmers);
-    } else {
+    }else {
       setLoaded(true);
       setError(true);
       console.log("Error " + response.statusText);
+
     }
   };
 

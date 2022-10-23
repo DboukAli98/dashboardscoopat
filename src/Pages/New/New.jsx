@@ -5,6 +5,8 @@ import Navbar from "../../Components/Navbar/Navbar";
 import Select from "react-select";
 import { Audio } from "react-loader-spinner";
 import axios from "axios";
+import ErrorMessage from "../../Components/MessageHandlings/Error";
+import SuccessMessage from "../../Components/MessageHandlings/Success";
 
 const New = () => {
   const regionOptions = [
@@ -18,10 +20,6 @@ const New = () => {
     { value: "KOTCHIMPO", label: "KOTCHIMPO" },
     { value: "ABOUDE NOUVEAU QUARTIER", label: "ABOUDE NOUVEAU QUARTIER" },
     { value: "ABOUDE KOUASSIKRO", label: "ABOUDE KOUASSIKRO" },
-
-
-
-
   ];
   const genderOptions = [
     { value: "male", label: "Male" },
@@ -33,6 +31,7 @@ const New = () => {
     { value: true, label: "Yes" },
     { value: false, label: "No" },
   ];
+  const [message, setMessage] = useState(null);
   const [loaded, setLoaded] = useState(true);
   const [fname, setFname] = useState();
   const [lname, setLname] = useState();
@@ -67,38 +66,16 @@ const New = () => {
   const AddFarmer = async (e) => {
     e.preventDefault();
     setLoaded(false);
-    const request = await axios("https://localhost:7066/api/Farmer/AddFarmer", {
+    await axios("https://localhost:7066/api/Farmer/AddFarmer", {
       method: "POST",
       data: reqData,
-      "content-Type":"application/json"
-    });
-
-    if (request.status === 200) {
-      setLoaded(true);
-      console.log("success");
-    } else {
-      setLoaded(true);
-      console.log("Error" + request.statusText);
-    }
+      "content-Type": "application/json",
+    }).then(response => {setMessage("Success");setLoaded(true)}).catch(error => {setMessage("Error") ; setLoaded(true) });
+  
   };
 
   return (
     <div className="new">
-       {loaded === false ? (
-        <div className="loader">
-          <Audio
-            className="loader"
-            height="30"
-            width="30"
-            radius="9"
-            color="#26547c"
-            ariaLabel="loading"
-            wrapperStyle
-            wrapperClass
-          />
-          <p className="loading">Loading</p>
-        </div>
-      ):null}
       <Sidebar />
       <div className="newContainer">
         <Navbar />
@@ -111,61 +88,136 @@ const New = () => {
           </div>
           <div className="right">
             <form>
+              {loaded === false ? (
+                <div className="loader">
+                  <Audio
+                    className="loader"
+                    height="30"
+                    width="30"
+                    radius="9"
+                    color="#26547c"
+                    ariaLabel="loading"
+                    wrapperStyle
+                    wrapperClass
+                  />
+                  <p className="loading">Loading</p>
+                </div>
+              ) : null}
               <div className="formInput">
                 <label>Firstname</label>
-                <input type="text" required placeholder="John" onChange={(e) => setFname(e.target.value)} />
+                <input
+                  type="text"
+                  required
+                  placeholder="John"
+                  onChange={(e) => setFname(e.target.value)}
+                />
               </div>
               <div className="formInput">
                 <label>Lastname</label>
-                <input type="text" required placeholder="Doe" onChange={(e) => setLname(e.target.value)} />
+                <input
+                  type="text"
+                  required
+                  placeholder="Doe"
+                  onChange={(e) => setLname(e.target.value)}
+                />
               </div>
               <div className="formInput">
                 <label>Id Type</label>
-                <input type="text" required placeholder="Id Type"  onChange={(e) => setIdType(e.target.value)}/>
+                <input
+                  type="text"
+                  required
+                  placeholder="Id Type"
+                  onChange={(e) => setIdType(e.target.value)}
+                />
               </div>
               <div className="formInput">
                 <label>Id Number</label>
-                <input type="text" required placeholder="Id number" onChange={(e) => setIdNum(e.target.value)} />
+                <input
+                  type="text"
+                  required
+                  placeholder="Id number"
+                  onChange={(e) => setIdNum(e.target.value)}
+                />
               </div>
               <div className="formInput">
                 <label>BirthPlace</label>
-                <input type="text" required placeholder="Agboville" onChange={(e) => setBPlace(e.target.value)} />
+                <input
+                  type="text"
+                  required
+                  placeholder="Agboville"
+                  onChange={(e) => setBPlace(e.target.value)}
+                />
               </div>
               <div className="formInput">
                 <label>BirthDate</label>
-                <input type="date" required onChange={(e) => setBDate(e.target.value)} />
+                <input
+                  type="date"
+                  required
+                  onChange={(e) => setBDate(e.target.value)}
+                />
               </div>
               <div className="formInput">
                 <label>Gender</label>
-                <Select options={genderOptions} onChange={(value) => setGender(value.value)}  />
+                <Select
+                  options={genderOptions}
+                  onChange={(value) => setGender(value.value)}
+                />
               </div>
               <div className="formInput">
                 <label>Contact Phone</label>
-                <input type="phone" required placeholder="+972..." onChange={(e) => setPhone(e.target.value)} />
+                <input
+                  type="phone"
+                  required
+                  placeholder="+972..."
+                  onChange={(e) => setPhone(e.target.value)}
+                />
               </div>
               <div className="formInput">
                 <label>Location</label>
-                <input type="text" required placeholder="Location" onChange={(e) => setLocation(e.target.value)} />
+                <input
+                  type="text"
+                  required
+                  placeholder="Location"
+                  onChange={(e) => setLocation(e.target.value)}
+                />
               </div>
               <div className="formInput">
                 <label>Section</label>
-                <input type="text" required placeholder="Section" onChange={(e) => setSection(e.target.value)} />
+                <input
+                  type="text"
+                  required
+                  placeholder="Section"
+                  onChange={(e) => setSection(e.target.value)}
+                />
               </div>
               <div className="formInput">
                 <label>Region</label>
-                <Select options={regionOptions} onChange={(value) => setRegion(value.value)} />
+                <Select
+                  options={regionOptions}
+                  onChange={(value) => setRegion(value.value)}
+                />
               </div>
               <div className="formInput">
                 <label>Department</label>
-                <input type="text" required placeholder="Department" onChange={(e) => setDepartment(e.target.value)} />
+                <input
+                  type="text"
+                  required
+                  placeholder="Department"
+                  onChange={(e) => setDepartment(e.target.value)}
+                />
               </div>
               <div className="formInput">
                 <label>Farm Owner ?</label>
-                <Select options={IsOwnerOptions} onChange={(value) => setOwner(value.value)} />
+                <Select
+                  options={IsOwnerOptions}
+                  onChange={(value) => setOwner(value.value)}
+                />
               </div>
               <div className="formInput">
                 <button onClick={AddFarmer}>Add Farmer</button>
               </div>
+              {message ==="Error" && ErrorMessage("Something Went Wrong !")}
+              {message === "Success" && SuccessMessage("Farmer Added !")}
             </form>
           </div>
         </div>
