@@ -13,6 +13,7 @@ import SingleUser from "./Pages/Single/SingleUser";
 import InspectionsList from "./Pages/List/InspectionsList";
 import LoginPage from "./Components/Authentication/LoginPage";
 import {useSelector } from 'react-redux';
+import EditFarmer from "./Pages/Edit/EditFarmer";
 
 
 
@@ -47,6 +48,7 @@ function App() {
               <Route index element={<List />} />
               <Route path=":farmerId" element={<SingleFarmer />} />
               <Route path="new" element={<New />} />
+              <Route path="/farmers/editFarmer/:farmerId" element={<EditFarmer/>}/>
             </Route>
             <Route path="inspections">
               <Route index element={<InspectionsList />} />

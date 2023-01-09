@@ -3,14 +3,18 @@ import React from 'react';
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import Navbar from "../../Components/Navbar/Navbar";
 import Chart from "../../Components/Charts/Charts";
+import { Link } from "react-router-dom";
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import base_url from '../../Utils/Constants/Constants';
 import RelatedInspectionList from "../List/RelatedInspectionList";
 import FarmerRelatedInspectionList from '../List/FarmerRelatedInspectionList';
+import BrokenImageIcon from '@mui/icons-material/BrokenImage';
 import { Circles } from "react-loader-spinner";
 import Error from '../../Utils/UserPrompts/Error';
+import { useNavigate, useNavigation } from "react-router-dom";
+
 
 
 
@@ -24,6 +28,8 @@ const SingleFarmer = () => {
   //prompts declarations
   const [loading , setLoading] = useState(false);
   const [error , setError] = useState(false);
+
+  const navigate = useNavigate();
   
   
   const LoadFarmer = async () => {
@@ -89,6 +95,12 @@ const SingleFarmer = () => {
     }
   } 
 
+  // const handleEdit = () => {
+  //   navigate("")
+  // }
+
+  
+
   useEffect(() => {
     LoadFarmer();
     LoadFarmerImage();
@@ -104,7 +116,9 @@ const SingleFarmer = () => {
         <Navbar />
         <div className="top">
           <div className="left">
+            <Link to={"/farmers/editFarmer/"+farmerId} style={{ textDecoration: "none" }}>
             <div className="editButton">Edit</div>
+            </Link>
             <h1 className="title">Information</h1>
             <div className="item">
              {loading && <Circles
@@ -119,7 +133,7 @@ const SingleFarmer = () => {
                 alt="Picture"
                 className="itemImg"
               />}
-              {notFound && <p>No Image</p>}
+              {notFound && <div> <BrokenImageIcon className='icon'/> <p>No Image </p> </div> }
               {error && <Error text={"Error Loading Image"}/>}
              { data && <div className="details">
                 <h1 className="itemTitle">{data.farmerCode}</h1>

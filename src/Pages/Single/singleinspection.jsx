@@ -68,7 +68,7 @@ const SingleInspection = () => {
                 <span className="itemValue">{data.assesment != null ? data.assesment.nonConformity : "no assesment"}</span>
               </div>
               <div className="detailItem">
-                <span className="itemKey">Longitude</span>
+                <span className="itemKey">Farmer</span>
                 <span className="itemValue">
                   {data.farmer.farmerCode}
                 </span>
