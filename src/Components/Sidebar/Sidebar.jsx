@@ -11,9 +11,24 @@ import GrassOutlinedIcon from '@mui/icons-material/GrassOutlined';
 import PsychologyOutlinedIcon from '@mui/icons-material/PsychologyOutlined';
 import SettingsSystemDaydreamOutlinedIcon from '@mui/icons-material/SettingsSystemDaydreamOutlined';
 import { Link } from "react-router-dom";
-
+import { useNavigate, useNavigation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authActions } from '../../redux/slices/authSlice';
 
 const Sidebar = () => {
+const navigate = useNavigate();
+const dispatch = useDispatch();
+
+
+  const handleLogout = ( ) => {
+    // access to e.target here
+    
+    
+      
+      dispatch(authActions.setLogout());
+      navigate('/login',{replace:true});
+    
+  };
   return (
     <div className='sidebar'>
       <div className="top">
@@ -92,7 +107,7 @@ const Sidebar = () => {
           </li>
           <li>
             <LogoutOutlinedIcon className='icon'/>
-            <span>
+            <span onClick={handleLogout}>
               Logout
             </span>
           </li>

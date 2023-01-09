@@ -6,8 +6,13 @@ import Widget from "../../Components/Widget/Widget";
 import Featured from "../../Components/Featured/Featured";
 import Charts from "../../Components/Charts/Charts";
 import Tables from "../../Components/Tables/Tables";
+import FarmersServices from "../../Services/FarmerServices/FarmersServices";
+import useApi from "../../Services/Hooks/useApi";
+import Datatable from "../../Components/Datatable/Datatable";
 
 const Home = () => {
+
+
   return (
     <div className="home">
       <Sidebar />
@@ -25,7 +30,7 @@ const Home = () => {
         </div>
         <div className="listContainer">
           <div className="listTitle">Latest Farmers</div>
-          <Tables />
+          <Datatable />
         </div>
       </div>
     </div>

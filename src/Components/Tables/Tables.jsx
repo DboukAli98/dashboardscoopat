@@ -3,6 +3,7 @@ import "./tables.scss";
 import { DataGrid, GridToolbar, GridToolbarContainer } from "@mui/x-data-grid";
 import { Audio } from "react-loader-spinner";
 import axios from "axios";
+import base_url from "../../Utils/Constants/Constants";
 
 const columns = [
   { field: "farmerCode", headerName: "Code", width: 150 },
@@ -38,7 +39,7 @@ const Tables = () => {
   const getFarmers = async () => {
     setLoaded(false);
     const response = await axios.get(
-      "https://localhost:7066/api/Farmer/GetAllFarmers"
+      base_url + "/api/Farmer/GetAllFarmers"
 
     );
     if ((await response).status === 200) {
@@ -62,7 +63,7 @@ const Tables = () => {
 
   return (
     <div className="table">
-      {loaded === false && (
+      {loaded === false &&  (
         <div className="loader">
           <Audio
             className="loader"
@@ -71,20 +72,19 @@ const Tables = () => {
             radius="9"
             color="#26547c"
             ariaLabel="loading"
-            wrapperStyle
-            wrapperClass
+            
           />
           <p className="loading">Loading</p>
         </div>
       )}
 
-      {error === true && loaded === false && (
+      {error === true && loaded === false&& (
         <div className="errorContainer">
           <p className="errorTxt">Failed To Load Farmers</p>
         </div>
       )}
 
-      {farmers && loaded === true && (
+      {farmers && (
         <div style={{ height: 400, width: "100%" }}>
           <DataGrid
             getRowId={(row) => row.farmerId}

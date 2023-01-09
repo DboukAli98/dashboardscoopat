@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import Navbar from "../../Components/Navbar/Navbar";
 import axios from "axios";
+import base_url from "../../Utils/Constants/Constants";
 // import Select from "react-select";
 
 
@@ -27,7 +28,7 @@ const NewUser = () => {
 
   const AddUser = async (e) => {
     e.preventDefault();
-    const request = await axios('https://localhost:7066/api/Authentication/RegisterEmployee' , {
+    const request = await axios(base_url + '/api/Authentication/RegisterEmployee' , {
       method:'POST',
       data : data,
       "Content-Type" : "application/json"

@@ -2,9 +2,43 @@ import "./single.scss";
 import Sidebar from "../../Components/Sidebar/Sidebar";
 import Navbar from "../../Components/Navbar/Navbar";
 import Chart from "../../Components/Charts/Charts";
-import List from "../../Components/Tables/Tables";
+import { useState } from "react";
+import base_url from "../../Utils/Constants/Constants";
+import axios from "axios";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import RelatedInspectionList from "../List/RelatedInspectionList";
 
 const Single = () => {
+
+  const {farmId} = useParams();
+  console.log(farmId);
+  
+
+  const [data , setData] = useState();
+
+  const LoadFarm = async() => {
+    const url = base_url + `/api/Farm/GetSingleFarm?farmId=${farmId}`;
+    const response = await axios.get(url);
+    if(response.status === 200){
+      setData(response.data);
+      console.log("Success !");
+      
+    }else {
+      console.log("Failed !");
+      console.log(axios.AxiosError);
+    }
+
+  };
+
+  useEffect(() => {
+
+    LoadFarm();
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  
+
+
   return (
     <div className="single">
       <Sidebar />
@@ -15,32 +49,32 @@ const Single = () => {
             <div className="editButton">Edit</div>
             <h1 className="title">Information</h1>
             <div className="item">
-              <img
+              {/* <img
                 src="https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
                 alt=""
                 className="itemImg"
-              />
-              <div className="details">
-                <h1 className="itemTitle">Jane Doe</h1>
+              /> */}
+             { data && <div className="details">
+                <h1 className="itemTitle">{data.farmCode}</h1>
                 <div className="detailItem">
-                  <span className="itemKey">Email:</span>
-                  <span className="itemValue">janedoe@gmail.com</span>
+                  <span className="itemKey">Total Area</span>
+                  <span className="itemValue">{data.totalArea} ha</span>
                 </div>
                 <div className="detailItem">
-                  <span className="itemKey">Phone:</span>
-                  <span className="itemValue">+1 2345 67 89</span>
+                  <span className="itemKey">Lattitude</span>
+                  <span className="itemValue">{data.lattitude}</span>
                 </div>
                 <div className="detailItem">
-                  <span className="itemKey">Address:</span>
+                  <span className="itemKey">Longitude</span>
                   <span className="itemValue">
-                    Elton St. 234 Garden Yd. NewYork
+                    {data.longtitude}
                   </span>
                 </div>
                 <div className="detailItem">
-                  <span className="itemKey">Country:</span>
-                  <span className="itemValue">USA</span>
+                  <span className="itemKey">Inspections Made</span>
+                  <span className="itemValue">{data.inspections != null ? data.inspections.length : 0}</span>
                 </div>
-              </div>
+              </div>}
             </div>
           </div>
           <div className="right">
@@ -49,7 +83,7 @@ const Single = () => {
         </div>
         <div className="bottom">
         <h1 className="title">Last Inspections</h1>
-          <List/>
+          <RelatedInspectionList text={farmId}/>
         </div>
       </div>
     </div>

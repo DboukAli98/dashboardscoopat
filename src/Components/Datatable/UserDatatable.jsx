@@ -4,6 +4,7 @@ import "./datatable.scss";
 import { DataGrid, GridToolbar, GridToolbarContainer } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { Audio } from "react-loader-spinner";
+import base_url from "../../Utils/Constants/Constants";
 
 const columns = [
   { field: "firstname", headerName: "Firstname", width: 200 },
@@ -40,7 +41,7 @@ const UserDatatable = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to="/users/test" style={{ textDecoration: "none" }}>
+            <Link to={"/users/" +params.row.id} style={{ textDecoration: "none" }}>
               <div className="viewButton">View</div>
             </Link>
           </div>
@@ -52,7 +53,7 @@ const UserDatatable = () => {
   const getUsers = async () => {
     setLoaded(false);
     const response = await axios.get(
-      "https://localhost:7066/api/Authentication/GetAllInspectors"
+      base_url + "/api/Authentication/GetAllInspectors"
     );
     if (response.status === 200) {
       const data = response.data;
@@ -72,7 +73,7 @@ const UserDatatable = () => {
 
   return (
     <div className="datatable">
-      {loaded === false && (
+      {loaded === false &&
         <div className="loader">
           <Audio
             height="30"
@@ -80,14 +81,13 @@ const UserDatatable = () => {
             radius="9"
             color="#26547c"
             ariaLabel="loading"
-            wrapperStyle
-            wrapperClass
+            
           />
           <p className="loading">Loading</p>
         </div>
-      )}
+      }
 
-      {users && (
+      {users && 
         <div style={{ height: 400, width: "100%" }}>
           <div className="outAction">
             <Link to="/users/new" style={{ textDecoration: "none" }}>
@@ -105,7 +105,7 @@ const UserDatatable = () => {
             components={{ Toolbar: CustomToolbar }}
           />
         </div>
-      )}
+      }
     </div>
   );
 };

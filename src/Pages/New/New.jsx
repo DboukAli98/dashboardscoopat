@@ -5,8 +5,9 @@ import Navbar from "../../Components/Navbar/Navbar";
 import Select from "react-select";
 import { Audio } from "react-loader-spinner";
 import axios from "axios";
-import ErrorMessage from "../../Components/MessageHandlings/Error";
-import SuccessMessage from "../../Components/MessageHandlings/Success";
+import base_url from "../../Utils/Constants/Constants";
+import Error from "../../Utils/UserPrompts/Error";
+import Success from "../../Utils/UserPrompts/Success";
 
 const New = () => {
   const regionOptions = [
@@ -31,8 +32,7 @@ const New = () => {
     { value: true, label: "Yes" },
     { value: false, label: "No" },
   ];
-  const [message, setMessage] = useState(null);
-  const [loaded, setLoaded] = useState(true);
+
   const [fname, setFname] = useState();
   const [lname, setLname] = useState();
   const [idType, setIdType] = useState();
@@ -63,15 +63,28 @@ const New = () => {
     isFarmOwner: owner,
   };
 
-  const AddFarmer = async (e) => {
-    e.preventDefault();
-    setLoaded(false);
-    await axios("https://localhost:7066/api/Farmer/AddFarmer", {
-      method: "POST",
-      data: reqData,
-      "content-Type": "application/json",
-    }).then(response => {setMessage("Success");setLoaded(true)}).catch(error => {setMessage("Error") ; setLoaded(true) });
-  
+  //post request states
+  const [loading , setLoading] = useState(false);
+  const [error , setError] = useState(false);
+  const [success , setSuccess] = useState(false);
+
+
+
+  const AddFarmer = async () => {
+    setLoading(true);
+    const url = base_url + `/api/Farmer/AddFarmer`;
+    const response = await axios(url , {
+      method:'POST',
+      data : reqData,
+    });
+    if(response.status === 200){
+      setLoading(false);
+      setSuccess(true);
+
+    }else if(response.status === 400){
+      setLoading(true);
+      setError(true);
+    }
   };
 
   return (
@@ -88,7 +101,7 @@ const New = () => {
           </div>
           <div className="right">
             <form>
-              {loaded === false ? (
+              {loading === true ? (
                 <div className="loader">
                   <Audio
                     className="loader"
@@ -216,8 +229,14 @@ const New = () => {
               <div className="formInput">
                 <button onClick={AddFarmer}>Add Farmer</button>
               </div>
-              {message ==="Error" && ErrorMessage("Something Went Wrong !")}
-              {message === "Success" && SuccessMessage("Farmer Added !")}
+              {error === true ? (
+                <Error text={"Failed To Insert Farmer Please Try again Later !"}/>
+              )                :null
+            }
+            {success === true ? (
+                <Success text={"Farmer Successfully Added !"}/>
+              )                :null
+            }
             </form>
           </div>
         </div>

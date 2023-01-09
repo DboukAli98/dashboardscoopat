@@ -4,6 +4,7 @@ import "./datatable.scss";
 import { DataGrid, GridToolbar, GridToolbarContainer } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { Audio } from "react-loader-spinner";
+import base_url from "../../Utils/Constants/Constants";
 
 const columns = [
   { field: "farmCode", headerName: "Code", width: 200 },
@@ -38,7 +39,7 @@ const FarmDatatable = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to="/farms/test" style={{ textDecoration: "none" }}>
+            <Link to={"/farms/"+params.row.farmId} style={{ textDecoration: "none" }}>
               <div className="viewButton">View</div>
             </Link>
           </div>
@@ -50,7 +51,7 @@ const FarmDatatable = () => {
   const getFarms = async () => {
     setLoaded(false);
     const response = await axios.get(
-      "https://localhost:7066/api/Farm/GetAllFarms"
+      base_url + "/api/Farm/GetAllFarms"
     );
     if (response.status === 200) {
       const data = response.data;
@@ -78,8 +79,6 @@ const FarmDatatable = () => {
             radius="9"
             color="#26547c"
             ariaLabel="loading"
-            wrapperStyle
-            wrapperClass
           />
           <p className="loading">Loading</p>
         </div>

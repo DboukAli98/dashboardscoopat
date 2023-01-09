@@ -1,0 +1,25 @@
+.ErrorContainer{
+    background-color: white;
+    border-radius: 20px;
+    width: 200px;
+    height: 40px;
+  
+    background-color: red;
+    border-radius: 20px;
+    margin: 15px;
+    
+    .errorText{
+        font-size: 12px;
+        text-align: center;
+        padding: 8px;
+    }
+}
+
+.SuccessContainer{
+    background-color: white;
+    border-radius: 20px;
+    width: 100px;
+    height: 100px;
+    color: green;
+
+}
