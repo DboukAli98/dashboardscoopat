@@ -12,6 +12,7 @@ import {
 import base_url from "../../Utils/Constants/Constants";
 import { Circles } from "react-loader-spinner";
 import axios from "axios";
+import https from 'https';
 import Error from "../../Utils/UserPrompts/Error";
 import { useNavigate, useNavigation } from "react-router-dom";
 import { useDispatch } from 'react-redux';
@@ -33,8 +34,7 @@ const LoginPage = () => {
     password: password,
   };
   
-  const https = require('https');
-const axios = require('axios');
+ 
 
 const instance = axios.create({
   httpsAgent: new https.Agent({ rejectUnauthorized: false }),
