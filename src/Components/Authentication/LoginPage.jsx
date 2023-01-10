@@ -32,12 +32,23 @@ const LoginPage = () => {
     email: email,
     password: password,
   };
+  
+  const https = require('https');
+const axios = require('axios');
+
+const instance = axios.create({
+  httpsAgent: new https.Agent({ rejectUnauthorized: false }),
+});
+
+
+
+
 
   const LoginHandler = async () => {
     setLoading(true);
     try {
       const url = base_url + "/api/Authentication/loginAdmin";
-      const response = await axios(url, {
+      const response = await instance(url, {
         method: "POST",
         data: data,
       });
