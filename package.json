@@ -17,6 +17,7 @@
     "axios": "^1.1.2",
     "mdb-react-ui-kit": "^5.0.0",
     "react": "^18.2.0",
+    "https":"^1.0.0",
     "react-bootstrap": "^2.7.0",
     "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.2.0",
